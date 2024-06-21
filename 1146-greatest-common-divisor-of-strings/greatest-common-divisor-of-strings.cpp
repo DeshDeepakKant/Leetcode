@@ -9,7 +9,7 @@ public:
             i++;
         }
         int sl = s.size();
-        if (!sl || (str1.length() % sl) ||(str2.length() % sl)) {
+        if (!sl ) {
             return "";
         }
         for (int i = 0; i < str1.length(); i++) {
