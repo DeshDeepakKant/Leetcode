@@ -12,43 +12,61 @@
  */
 class Solution {
 public:
+    // void dfs(TreeNode*& root, int key) {
+    //     if (root == NULL) {
+    //         return;
+    //     }
+    //     if (root->val == key) {
+    //         if (root->right == NULL && root->left == NULL) {
+    //             root = NULL;
+    //             return;
+    //         }
+    //         if (root->right == NULL) {
+    //             root = root->left;
+    //             return;
+    //         }
+    //         if (root->left == NULL) {
+    //             root = root->right;
+    //             return;
+    //         }
+
+    //         TreeNode* temp = root->left;
+    //         while (temp->right != NULL) {
+    //             temp = temp->right;
+    //         }
+    //         temp->right = root->left;
+    //         root=root->right;
+    //         return;
+    //     }
+    //     if (key < root->val) {
+    //         dfs(root->left, key);
+    //     } else {
+    //         dfs(root->right, key);
+    //     }
+    //     return;
+    // }
     TreeNode* deleteNode(TreeNode* root, int key) {
-        if (root == NULL) {
-            return root;
-        }
-        // Find the node to be deleted
-        if (key < root->val) {
-            root->left = deleteNode(root->left, key);
-        } else if (key > root->val) {
+        if (!root)
+            return NULL;
+        if (root->val < key)
             root->right = deleteNode(root->right, key);
-        } else {
-            // Node with only one child or no child
-            if (root->left == NULL) {
+        else if (root->val > key)
+            root->left = deleteNode(root->left, key);
+        else {
+            if (!root->right && !root->left)
+                return NULL;
+            else if (!root->right)
+                return root->left;
+            else if (!root->left)
+                return root->right;
+            else {
                 TreeNode* temp = root->right;
-                delete root;
-                return temp;
-            } else if (root->right == NULL) {
-                TreeNode* temp = root->left;
-                delete root;
-                return temp;
+                while (temp->left)
+                    temp = temp->left;
+                temp->left = root->left;
+                return root->right;
             }
-            // Node with two children: Get the in-order successor (smallest in the right subtree)
-            TreeNode* temp = minValueNode(root->right);
-            // Copy the in-order successor's content to this node
-            root->val = temp->val;
-            // Delete the in-order successor
-            root->right = deleteNode(root->right, temp->val);
         }
         return root;
     }
-    
-    TreeNode* minValueNode(TreeNode* node) {
-        TreeNode* current = node;
-        // Loop to find the leftmost leaf
-        while (current && current->left != NULL) {
-            current = current->left;
-        }
-        return current;
-    }
 };
-
