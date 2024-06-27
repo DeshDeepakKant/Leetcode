@@ -3,7 +3,7 @@ public:
     void f(vector<vector<int>>& ans, vector<int>& v, int k, int n, int s,
            int x) {
 
-        if (s == n && k == 0 ) {
+        if (s == n && k == 0&&x>=0 ) {
             ans.push_back(v);
             return;
         }
