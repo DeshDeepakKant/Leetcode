@@ -13,14 +13,16 @@ public:
     int minEatingSpeed(vector<int>& piles, int h) {
 
         long long l = 1, r = 1e9;
+        int ans=-1;
         while (l <= r) {
             long long mid = (l + r) / 2;
             if (check(mid, piles, h)) {
+                ans=mid;
                 r = mid - 1;
             } else {
                 l = mid + 1;
             }
         }
-        return l;
+        return ans;
     }
 };
